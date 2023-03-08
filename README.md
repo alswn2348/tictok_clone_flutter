@@ -1,6 +1,6 @@
 # tictok_clone_flutter
 
-A new Flutter project.
+글로벌 숏폼 비디오 플랫폼 틱톡을 클론 코딩 한 프로젝트
 
 ## Getting Started
 
