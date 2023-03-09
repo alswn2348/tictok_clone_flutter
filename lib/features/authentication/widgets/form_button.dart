@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
-  const FormButton({
+  FormButton({
     super.key,
     required this.disabled,
+    this.title = 'next',
   });
   final bool disabled;
+  String title;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,8 @@ class FormButton extends StatelessWidget {
           style: TextStyle(
               color: disabled ? Colors.grey.shade400 : Colors.white,
               fontWeight: FontWeight.w600),
-          child: const Text(
-            'next',
+          child: Text(
+            title,
             textAlign: TextAlign.center,
           ),
         ),

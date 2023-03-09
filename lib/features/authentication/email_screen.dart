@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
-import 'package:tictok_clone_flutter/features/authentication/widgets/password_screen.dart';
 
-import 'form_button.dart';
+import 'password_screen.dart';
+import 'widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});

@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
-import 'package:tictok_clone_flutter/features/authentication/widgets/auth_button.dart';
-import 'package:tictok_clone_flutter/features/authentication/widgets/username_screen.dart';
+import 'package:tictok_clone_flutter/constants/sizes.dart';
 
-import '../../../constants/sizes.dart';
-import 'login_screen.dart';
+import 'login_form_screen.dart';
+import 'widgets/auth_button.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
-  void onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+  void onSignupTap(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
-  void _onEmailTap(BuildContext context) {
+  void _onEmailLoginTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
+        builder: (context) => const LoginFormScreen(),
       ),
     );
   }
@@ -35,21 +30,21 @@ class SignUpScreen extends StatelessWidget {
           child: Column(children: [
             Gaps.v80,
             const Text(
-              'Sign up for tictok',
+              'Log in to tictok',
               style: TextStyle(
                   fontSize: Sizes.size24, fontWeight: FontWeight.w700),
             ),
             Gaps.v20,
             const Text(
-              'Create a profile, follow other accounts, make your own videos, and more.',
+              'Manage your account, check notifications, comment on videos, and more.',
               style: TextStyle(fontSize: Sizes.size16, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
             Gaps.v40,
             GestureDetector(
-              onTap: () => _onEmailTap(context),
+              onTap: () => _onEmailLoginTap(context),
               child: const AuthButton(
-                text: 'Use email & password',
+                text: 'Use email & passward',
                 icon: FaIcon(FontAwesomeIcons.user),
               ),
             ),
@@ -69,12 +64,12 @@ class SignUpScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Aleady have an account?'),
+              const Text('Don\'t have an account?'),
               Gaps.h5,
               GestureDetector(
-                onTap: () => onLoginTap(context),
+                onTap: () => onSignupTap(context),
                 child: Text(
-                  'Login',
+                  'Sign up',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600),
