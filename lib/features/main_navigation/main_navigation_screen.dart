@@ -38,40 +38,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onTap,
-        selectedItemColor: Theme.of(context).primaryColor,
-        items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
-            label: 'Home',
-            tooltip: 'what?',
-            backgroundColor: Colors.amber,
-          ),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-              label: 'search',
-              tooltip: 'what?',
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-              label: 'search',
-              tooltip: 'what?',
-              backgroundColor: Colors.yellow),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-              label: 'search',
-              tooltip: 'what?',
-              backgroundColor: Colors.cyan),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-              label: 'search',
-              tooltip: 'what?',
-              backgroundColor: Colors.green),
-        ],
-      ),
-    );
+        body: screens[_selectedIndex],
+        bottomNavigationBar: NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: _onTap,
+          destinations: const [
+            NavigationDestination(
+                icon: FaIcon(FontAwesomeIcons.house), label: 'home'),
+            NavigationDestination(
+                icon: FaIcon(FontAwesomeIcons.house), label: 'home')
+          ],
+        ));
   }
 }
