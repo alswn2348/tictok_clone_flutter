@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
-  FormButton({
+  const FormButton({
     super.key,
     required this.disabled,
     this.title = 'next',
   });
   final bool disabled;
-  String title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {

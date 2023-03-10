@@ -88,7 +88,8 @@ class _UsernameScreenState extends State<BirthdayScreen> {
             ),
           ),
           Gaps.v16,
-          GestureDetector(onTap: _onNextTap, child: FormButton(disabled: false))
+          GestureDetector(
+              onTap: _onNextTap, child: const FormButton(disabled: false))
         ]),
       ),
       bottomNavigationBar: BottomAppBar(
