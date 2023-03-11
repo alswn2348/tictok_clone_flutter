@@ -9,11 +9,12 @@ class NavigationTap extends StatelessWidget {
     required this.isSelected,
     required this.icon,
     required this.onTap,
+    required this.selectedIcon,
   });
 
   final String text;
   final bool isSelected;
-  final IconData icon;
+  final IconData icon, selectedIcon;
   final Function onTap;
 
   @override
@@ -25,12 +26,12 @@ class NavigationTap extends StatelessWidget {
           color: Colors.black,
           child: AnimatedOpacity(
             opacity: isSelected ? 1 : 0.6,
-            duration: const Duration(milliseconds: 150),
+            duration: const Duration(milliseconds: 400),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 FaIcon(
-                  icon,
+                  isSelected ? selectedIcon : icon,
                   color: Colors.white,
                 ),
                 Gaps.v5,

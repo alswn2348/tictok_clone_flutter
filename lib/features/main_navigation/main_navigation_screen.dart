@@ -19,10 +19,39 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  final screen = [
+    const Center(
+      child: Text(
+        "Home",
+        style: TextStyle(fontSize: Sizes.size40),
+      ),
+    ),
+    const Center(
+      child: Text(
+        "Discover",
+        style: TextStyle(fontSize: Sizes.size40),
+      ),
+    ),
+    Container(),
+    const Center(
+      child: Text(
+        "Inbox",
+        style: TextStyle(fontSize: Sizes.size40),
+      ),
+    ),
+    const Center(
+      child: Text(
+        "Profile",
+        style: TextStyle(fontSize: Sizes.size40),
+      ),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        body: screen[_selectedIndex],
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: Padding(
@@ -34,25 +63,29 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     text: "Home",
                     isSelected: _selectedIndex == 0,
                     icon: FontAwesomeIcons.house,
+                    selectedIcon: FontAwesomeIcons.house,
                     onTap: () => _onTap(0),
                   ),
                   NavigationTap(
                     text: "Discover",
                     isSelected: _selectedIndex == 1,
-                    icon: FontAwesomeIcons.magnifyingGlass,
+                    icon: FontAwesomeIcons.compass,
+                    selectedIcon: FontAwesomeIcons.solidCompass,
                     onTap: () => _onTap(1),
                   ),
                   NavigationTap(
                     text: "Inbox",
-                    isSelected: _selectedIndex == 2,
+                    isSelected: _selectedIndex == 3,
                     icon: FontAwesomeIcons.message,
-                    onTap: () => _onTap(2),
+                    selectedIcon: FontAwesomeIcons.solidMessage,
+                    onTap: () => _onTap(3),
                   ),
                   NavigationTap(
                     text: "Profile",
-                    isSelected: _selectedIndex == 3,
+                    isSelected: _selectedIndex == 4,
                     icon: FontAwesomeIcons.user,
-                    onTap: () => _onTap(3),
+                    selectedIcon: FontAwesomeIcons.solidUser,
+                    onTap: () => _onTap(4),
                   ),
                 ]),
           ),
