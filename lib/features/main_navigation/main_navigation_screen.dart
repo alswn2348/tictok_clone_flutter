@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/features/main_navigation/widgets/navigation_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -11,24 +13,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final screens = [
-    const Center(
-      child: Text('home'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -37,13 +21,43 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(items: const [
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house), label: 'home'),
-          BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: 'home'),
-        ]),
-        tabBuilder: (context, index) => screens[index]);
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.all(Sizes.size12),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NavigationTap(
+                    text: "Home",
+                    isSelected: _selectedIndex == 0,
+                    icon: FontAwesomeIcons.house,
+                    onTap: () => _onTap(0),
+                  ),
+                  NavigationTap(
+                    text: "Discover",
+                    isSelected: _selectedIndex == 1,
+                    icon: FontAwesomeIcons.magnifyingGlass,
+                    onTap: () => _onTap(1),
+                  ),
+                  NavigationTap(
+                    text: "Inbox",
+                    isSelected: _selectedIndex == 2,
+                    icon: FontAwesomeIcons.message,
+                    onTap: () => _onTap(2),
+                  ),
+                  NavigationTap(
+                    text: "Profile",
+                    isSelected: _selectedIndex == 3,
+                    icon: FontAwesomeIcons.user,
+                    onTap: () => _onTap(3),
+                  ),
+                ]),
+          ),
+        ),
+      ),
+    );
   }
 }
