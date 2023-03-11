@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/stf_screen.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/navigation_tab.dart';
+import 'package:tictok_clone_flutter/features/main_navigation/widgets/post_video_button.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -65,6 +67,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     selectedIcon: FontAwesomeIcons.solidCompass,
                     onTap: () => _onTap(1),
                   ),
+                  Gaps.h24,
+                  const PostVideoButton(),
+                  Gaps.h24,
                   NavigationTap(
                     text: "Inbox",
                     isSelected: _selectedIndex == 3,
