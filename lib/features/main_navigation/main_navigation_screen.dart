@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/features/main_navigation/stf_screen.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/navigation_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -19,39 +20,30 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
-  final screen = [
-    const Center(
-      child: Text(
-        "Home",
-        style: TextStyle(fontSize: Sizes.size40),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "Discover",
-        style: TextStyle(fontSize: Sizes.size40),
-      ),
-    ),
-    Container(),
-    const Center(
-      child: Text(
-        "Inbox",
-        style: TextStyle(fontSize: Sizes.size40),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "Profile",
-        style: TextStyle(fontSize: Sizes.size40),
-      ),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: screen[_selectedIndex],
+        body: Stack(
+          children: [
+            Offstage(
+              offstage: _selectedIndex != 0,
+              child: const StfScreen(),
+            ),
+            Offstage(
+              offstage: _selectedIndex != 1,
+              child: const StfScreen(),
+            ),
+            Offstage(
+              offstage: _selectedIndex != 3,
+              child: const StfScreen(),
+            ),
+            Offstage(
+              offstage: _selectedIndex != 4,
+              child: const StfScreen(),
+            )
+          ],
+        ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: Padding(
