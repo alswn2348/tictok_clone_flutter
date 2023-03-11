@@ -5,6 +5,7 @@ import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/stf_screen.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/navigation_tab.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tictok_clone_flutter/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -22,6 +23,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  void _onPostVideoButtonTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Container(),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,7 +40,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           children: [
             Offstage(
               offstage: _selectedIndex != 0,
-              child: const StfScreen(),
+              child: const VideoTimelineScreen(),
             ),
             Offstage(
               offstage: _selectedIndex != 1,
@@ -68,7 +78,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     onTap: () => _onTap(1),
                   ),
                   Gaps.h24,
-                  const PostVideoButton(),
+                  GestureDetector(
+                    onTap: _onPostVideoButtonTap,
+                    child: const PostVideoButton(),
+                  ),
                   Gaps.h24,
                   NavigationTap(
                     text: "Inbox",
