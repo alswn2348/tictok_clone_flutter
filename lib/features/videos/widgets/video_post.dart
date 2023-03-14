@@ -76,6 +76,9 @@ class _VideoPostState extends State<VideoPost>
         !_isPaused) {
       _videoPlayerController.play();
     }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
