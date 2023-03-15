@@ -45,16 +45,29 @@ class _ActivityScreenState extends State<ActivityScreen>
   late final AnimationController _animationController;
   late final Animation<double> _arrowAnimation;
   late final Animation<Offset> _panelAnimation;
+  late final Animation<Color?> _barrierAnimation;
+
+  bool _showBarrier = false;
+
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
     );
+
     _arrowAnimation = Tween(begin: 0.0, end: 0.5).animate(_animationController);
-    _panelAnimation = Tween(begin: const Offset(0, -1.0), end: Offset.zero)
-        .animate(_animationController);
+
+    _panelAnimation = Tween(
+      begin: const Offset(0, -1.0),
+      end: Offset.zero,
+    ).animate(_animationController);
+
+    _barrierAnimation = ColorTween(
+      begin: Colors.transparent,
+      end: Colors.black38,
+    ).animate(_animationController);
   }
 
   void _onDismissed(String notification) {
@@ -62,12 +75,15 @@ class _ActivityScreenState extends State<ActivityScreen>
     setState(() {});
   }
 
-  void _onTitleTap() {
+  void _onToggleAnimation() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
     } else {
       _animationController.forward();
     }
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
 
   @override
@@ -75,7 +91,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _onToggleAnimation,
           child: Padding(
             padding: const EdgeInsets.only(right: Sizes.size44),
             child: Row(
@@ -193,6 +209,12 @@ class _ActivityScreenState extends State<ActivityScreen>
                 )
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              onDismiss: _onToggleAnimation,
+              dismissible: true,
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
@@ -228,7 +250,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
