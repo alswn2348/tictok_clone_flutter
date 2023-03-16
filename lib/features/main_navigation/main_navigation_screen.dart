@@ -4,9 +4,9 @@ import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/discover/discover_screen.dart';
 import 'package:tictok_clone_flutter/features/inbox/inbox_screen.dart';
-import 'package:tictok_clone_flutter/features/main_navigation/stf_screen.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/navigation_tab.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tictok_clone_flutter/features/user/user_profile_screen.dart';
 import 'package:tictok_clone_flutter/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
 
   void _onTap(int index) {
     setState(() {
@@ -55,7 +55,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ),
             Offstage(
               offstage: _selectedIndex != 4,
-              child: const StfScreen(),
+              child: const UserProfileScreen(),
             )
           ],
         ),
