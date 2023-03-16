@@ -10,50 +10,66 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
+
+  final List<int> _items = [];
+
+  void _addItem() {
+    if (_key.currentState != null) {
+      _key.currentState!.insertItem(_items.length);
+      _items.add(_items.length);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {}, icon: const FaIcon(FontAwesomeIcons.plus))
-        ],
-        elevation: 1,
-        title: const Text('Direct messages'),
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
-            child: ListTile(
-              leading: const CircleAvatar(
-                radius: 30,
-                foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/62362753?v=4"),
-                child: Text('민추'),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    'Lytt',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: _addItem, icon: const FaIcon(FontAwesomeIcons.plus))
+          ],
+          elevation: 1,
+          title: const Text('Direct messages'),
+        ),
+        body: AnimatedList(
+          key: _key,
+          padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
+          itemBuilder: (context, index, animation) {
+            return FadeTransition(
+              key: UniqueKey(),
+              opacity: animation,
+              child: SizeTransition(
+                sizeFactor: animation,
+                child: ListTile(
+                  leading: const CircleAvatar(
+                    radius: 30,
+                    foregroundImage: NetworkImage(
+                        "https://avatars.githubusercontent.com/u/62362753?v=4"),
+                    child: Text('민추'),
                   ),
-                  Text(
-                    "3:42PM",
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: Sizes.size14,
-                    ),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        '$index',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "3:42PM",
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: Sizes.size14,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                  subtitle: const Text('Don\' forger to make video'),
+                ),
               ),
-              subtitle: const Text('Don\' forger to make video'),
-            ),
-          )
-        ],
-      ),
-    );
+            );
+          },
+        ));
   }
 }
