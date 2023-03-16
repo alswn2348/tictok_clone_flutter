@@ -2,15 +2,14 @@
 
 글로벌 숏폼 비디오 플랫폼 틱톡을 클론 코딩 한 프로젝트
 
-## Getting Started
+## 사용한 위젯
 
-This project is a starting point for a Flutter application.
+### Continer() - 레이아웃을 할당해주는 기본 위젯
 
-A few resources to get you started if this is your first Flutter project:
+- color, width, height, decoretion, key, alignment, padding, magin 등을 파라미터로 가지고 있다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Row(), Column() - 위을 행 과 열로 묶어주는 위젯
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- mainAxisAligment, mainAxisSize, crossAxisAlignment, verticalDirection 등을 파라미터로 가지고 있다.
+
+- verticalDirection로 정렬 순서를 바꿀수 있고 mainAxisAligment, crossAxisAlignment 로 위치를 정렬 할 수 있다. 
