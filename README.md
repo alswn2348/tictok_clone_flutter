@@ -21,4 +21,38 @@
     - SliverAppBar() 스크롤이 가능한 앱바 위젯
 
         -  floating, stretch, pinned, backgroundColor, collapsedHeight, expandedHeight, flexibleSpace
+
         - floating, stretch, pinned 등으로 애니매이션 효과를 줄 수 있다.
+
+    - SliverFixedExtentList() 리스트 위젯
+
+        - delegate, itemExtent 
+    
+    - SliverGrid() Grid 를 담을 수 있는 위젯
+        
+        - delegate, gridDelegate
+    
+    - SliverToBoxAdapter() 모든 위젯을 담을수 있는 레이아웃 위젯
+
+    - SliverPersistentHeader()
+
+### newstedScrollView()
+
+    - 안의 모든 scroll position 들을 연결 한다.
+
+### ListWheelScrollView()
+
+    -wheel 모양 scroll view 를 만들어 준다.
+
+### CircularProgressIndicator.adaptive()
+
+    - os 에 맞는 로딩위젯을 보여준다. (android = CircularProgressIndicator, ios = CupertinoActivityIndicator)
+
+
+### aboutListTile()
+
+    - showAboutDialog를 보여주는 listTile을 만든다.
+
+### showCupertinoDialog() , showCupertinoModalPopup()
+
+    - ios 모양의 다이아로그를 보여준다. showCupertinoModalPopup() 는 modal 밖을 눌러 나갈 수 있다.
