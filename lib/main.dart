@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tictok_clone_flutter/features/main_navigation/main_navigation_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
 import 'constants/sizes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const TicTokApp());
 }
 
@@ -13,6 +18,7 @@ class TicTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       theme: ThemeData(
           //splashColor: Colors.transparent,
@@ -33,7 +39,7 @@ class TicTokApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.white,
           primaryColor: const Color(0xFFE9435A)),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
