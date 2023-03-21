@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
+import 'package:tictok_clone_flutter/features/main_navigation/main_navigation_screen.dart';
 import 'constants/sizes.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); //플러터 엔진 초기화
 
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]); //세로모드 고정
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark); //상태바 색깔 변경
 
   runApp(const TicTokApp());
 }
@@ -39,7 +42,7 @@ class TicTokApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.white,
           primaryColor: const Color(0xFFE9435A)),
-      home: const SignUpScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
