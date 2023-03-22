@@ -56,3 +56,10 @@
 ### showCupertinoDialog() , showCupertinoModalPopup()
 
     - ios 모양의 다이아로그를 보여준다. showCupertinoModalPopup() 는 modal 밖을 눌러 나갈 수 있다.
+
+### MediaQuery , LayoutBuilder 
+
+    - MediaQuery 는 현재 앱을 사용하고 있는 기기에 대한 정보를 제공한다. 
+
+    - LayoutBuilder 는 화면 크기가 아닌 layout 크기에 대한 정보를 제공한다.
+

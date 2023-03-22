@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/breakpoints.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/utils.dart';
 
 final tabs = [
   "Top",
@@ -42,6 +43,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             child: CupertinoSearchTextField(
               onChanged: _onSearchChanged,
               onSubmitted: _onSearchSubmitted,
+              style: TextStyle(
+                  color: isDarkMode(context) ? Colors.white : Colors.black),
             ),
           ),
           bottom: TabBar(
@@ -51,9 +54,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 horizontal: Sizes.size16,
               ),
               isScrollable: true,
-              indicatorColor: Colors.black,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey.shade500,
+              indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
               labelStyle: const TextStyle(
                   fontWeight: FontWeight.w600, fontSize: Sizes.size16),
               tabs: [
@@ -100,7 +101,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   Gaps.v5,
                   DefaultTextStyle(
                     style: TextStyle(
-                      color: Colors.grey.shade600,
+                      color: isDarkMode(context)
+                          ? Colors.grey.shade400
+                          : Colors.grey.shade600,
                       fontWeight: FontWeight.w600,
                     ),
                     child: Row(

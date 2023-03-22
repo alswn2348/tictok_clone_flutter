@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/utils.dart';
 
 class InterestButton extends StatefulWidget {
   const InterestButton({
@@ -24,6 +25,9 @@ class _InterestButtonState extends State<InterestButton> {
 
   @override
   Widget build(BuildContext context) {
+    Color buttonColor =
+        isDarkMode(context) ? Colors.grey.shade600 : Colors.white;
+
     return GestureDetector(
       onTap: _onTap,
       child: AnimatedContainer(
@@ -33,7 +37,7 @@ class _InterestButtonState extends State<InterestButton> {
           horizontal: Sizes.size24,
         ),
         decoration: BoxDecoration(
-          color: _isSelected ? Theme.of(context).primaryColor : Colors.white,
+          color: _isSelected ? Theme.of(context).primaryColor : buttonColor,
           borderRadius: BorderRadius.circular(
             Sizes.size32,
           ),
