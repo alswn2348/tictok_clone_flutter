@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
 import 'package:tictok_clone_flutter/features/main_navigation/main_navigation_screen.dart';
 import 'constants/sizes.dart';
 
@@ -91,7 +92,7 @@ class TicTokApp extends StatelessWidget {
         //메인 컬러
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

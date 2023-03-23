@@ -183,7 +183,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           Gaps.h4,
                           Text(
-                            "https://nomadcoders.co",
+                            "https://github.com/alswn2348",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                             ),
