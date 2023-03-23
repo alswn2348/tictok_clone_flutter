@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
+import 'package:tictok_clone_flutter/features/authentication/login_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone_flutter/utils.dart';
 
 import '../../../constants/sizes.dart';
-import 'login_screen.dart';
 import 'username_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeName = "/";
   const SignUpScreen({super.key});
 
   void onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+    Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
+        //애니메이션 효과
         transitionDuration: const Duration(seconds: 1),
         reverseTransitionDuration: const Duration(seconds: 1),
         pageBuilder: (context, animation, secondaryAnimation) =>

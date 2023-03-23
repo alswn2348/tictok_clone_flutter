@@ -45,21 +45,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 firstDate: DateTime(1900),
                 lastDate: DateTime(2030),
               );
-              await showDateRangePicker(
-                context: context,
-                firstDate: DateTime(1980),
-                lastDate: DateTime(2030),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData(
-                        appBarTheme: const AppBarTheme(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.black,
-                    )),
-                    child: child!,
-                  );
-                },
-              );
             },
             title: const Text('What is your birthday'),
           ),

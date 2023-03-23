@@ -8,6 +8,7 @@ import 'login_form_screen.dart';
 import 'widgets/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String routeName = "/login";
   const LoginScreen({super.key});
 
   void onSignupTap(BuildContext context) {
