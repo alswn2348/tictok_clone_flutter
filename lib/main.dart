@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tictok_clone_flutter/features/authentication/email_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
 import 'constants/sizes.dart';
 import 'features/authentication/login_screen.dart';
@@ -96,6 +97,7 @@ class TicTokApp extends StatelessWidget {
       routes: {
         SignUpScreen.routeName: (context) => const SignUpScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
+        EmailScreen.routeName: (context) => const EmailScreen()
       },
     );
   }
