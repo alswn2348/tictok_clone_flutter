@@ -18,7 +18,9 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
+    context.push(UsernameScreen.routeName);
+
+    /* Navigator.of(context).push(
       PageRouteBuilder(
         //애니메이션 효과
         transitionDuration: const Duration(seconds: 1),
@@ -35,7 +37,7 @@ class SignUpScreen extends StatelessWidget {
           );
         },
       ),
-    );
+    ); */
   }
 
   @override
