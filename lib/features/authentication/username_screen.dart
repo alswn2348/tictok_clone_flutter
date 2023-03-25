@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 
@@ -38,10 +39,8 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    Navigator.of(context).pushNamed(
-      EmailScreen.routeName,
-      arguments: EmailScreenArgs(userName: _username),
-    );
+    context.push(EmailScreen.routeName,
+        extra: EmailScreenArgs(userName: _username));
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/features/authentication/login_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/widgets/auth_button.dart';
@@ -13,7 +14,7 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void onLoginTap(BuildContext context) {
-    Navigator.of(context).pushNamed(LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
