@@ -1,22 +1,35 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone_flutter/features/authentication/email_screen.dart';
-import 'package:tictok_clone_flutter/features/authentication/login_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/username_screen.dart';
-import 'package:tictok_clone_flutter/features/user/user_profile_screen.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: SignUpScreen.routeName,
-      builder: (context, state) => const SignUpScreen(),
-    ),
-    GoRoute(
+        name: SignUpScreen.routeName,
+        path: SignUpScreen.routeURL,
+        builder: (context, state) => const SignUpScreen(),
+        routes: [
+          GoRoute(
+              path: UsernameScreen.routeURL,
+              name: UsernameScreen.routeName,
+              builder: (context, state) => const UsernameScreen(),
+              routes: [
+                GoRoute(
+                  path: EmailScreen.routeURL,
+                  name: EmailScreen.routeName,
+                  builder: (context, state) {
+                    final args = state.extra as EmailScreenArgs;
+                    return EmailScreen(username: args.userName);
+                  },
+                ),
+              ]),
+        ]),
+    /*    GoRoute(
       path: LoginScreen.routeName,
       builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
+    ), */
+    /* GoRoute(
       name: "username_screen",
       path: UsernameScreen.routeName,
       pageBuilder: (context, state) {
@@ -33,14 +46,8 @@ final router = GoRouter(
           },
         );
       },
-    ),
-    GoRoute(
-      path: EmailScreen.routeName,
-      builder: (context, state) {
-        final args = state.extra as EmailScreenArgs;
-        return EmailScreen(username: args.userName);
-      },
-    ),
+    ), */
+/* 
     GoRoute(
       path: "/users/:username",
       builder: (context, state) {
@@ -52,6 +59,6 @@ final router = GoRouter(
         }
         return UserProfileScreen(username: username!);
       },
-    ),
+    ), */
   ],
 );

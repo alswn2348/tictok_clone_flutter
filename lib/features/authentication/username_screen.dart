@@ -7,7 +7,8 @@ import 'email_screen.dart';
 import 'widgets/form_button.dart';
 
 class UsernameScreen extends StatefulWidget {
-  static const String routeName = "/username";
+  static const String routeName = "username";
+  static String routeURL = "username";
   const UsernameScreen({super.key});
 
   @override
@@ -39,7 +40,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    context.push(EmailScreen.routeName,
+    context.pushNamed(EmailScreen.routeName,
         extra: EmailScreenArgs(userName: _username));
   }
 

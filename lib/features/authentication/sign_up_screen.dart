@@ -10,7 +10,8 @@ import '../../../constants/sizes.dart';
 import 'username_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeName = "signUp";
+  static String routeURL = "/";
   const SignUpScreen({super.key});
 
   void onLoginTap(BuildContext context) {
@@ -18,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
 
     /* Navigator.of(context).push(
       PageRouteBuilder(
