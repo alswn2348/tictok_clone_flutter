@@ -63,3 +63,6 @@
 
     - LayoutBuilder 는 화면 크기가 아닌 layout 크기에 대한 정보를 제공한다.
 
+### Expanded()
+
+    --가능한 최소한 크기로 바꿔준다.

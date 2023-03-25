@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tictok_clone_flutter/features/authentication/email_screen.dart';
-import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
+import 'package:tictok_clone_flutter/router.dart';
 import 'constants/sizes.dart';
-import 'features/authentication/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //플러터 엔진 초기화
@@ -22,7 +20,8 @@ class TicTokApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       themeMode: ThemeMode.system,
@@ -93,12 +92,6 @@ class TicTokApp extends StatelessWidget {
         //메인 컬러
         primaryColor: const Color(0xFFE9435A),
       ),
-      initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen()
-      },
     );
   }
 }
