@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tictok_clone_flutter/constants/gaps.dart';
+import 'package:tictok_clone_flutter/constants/sizes.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
@@ -12,10 +14,18 @@ class VideoRecordingScreen extends StatefulWidget {
 class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   bool _hasPermission = false;
 
+  late final CameraController _cameraController;
+
   @override
   void initState() {
     super.initState();
     initPermissions();
+  }
+
+  @override
+  void dispose() {
+    _cameraController.dispose();
+    super.dispose();
   }
 
   Future<void> initPermissions() async {
@@ -36,15 +46,41 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   }
 
   Future<void> initCamera() async {
-    final camera = await availableCameras();
-    print(camera);
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) {
+      return;
+    }
+
+    _cameraController =
+        CameraController(cameras[0], ResolutionPreset.ultraHigh);
+
+    await _cameraController.initialize();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: !_hasPermission || !_cameraController.value.isInitialized
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Initializing...",
+                    style:
+                        TextStyle(color: Colors.white, fontSize: Sizes.size20),
+                  ),
+                  Gaps.v20,
+                  CircularProgressIndicator.adaptive()
+                ],
+              )
+            : Stack(
+                alignment: Alignment.center,
+                children: [CameraPreview(_cameraController)]),
+      ),
     );
   }
 }
