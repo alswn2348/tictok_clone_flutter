@@ -18,6 +18,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
   late CameraController _cameraController;
 
+  late FlashMode _flashMode;
+
   @override
   void initState() {
     super.initState();
@@ -59,11 +61,19 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     );
 
     await _cameraController.initialize();
+
+    _flashMode = _cameraController.value.flashMode;
   }
 
   Future<void> _toggleSelfieMode() async {
     _isSelfieMode = !_isSelfieMode;
     await initCamera();
+    setState(() {});
+  }
+
+  Future<void> _setFlashMode(FlashMode newFlashMode) async {
+    await _cameraController.setFlashMode(newFlashMode);
+    _flashMode = newFlashMode;
     setState(() {});
   }
 
@@ -93,11 +103,49 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                   CameraPreview(_cameraController),
                   Positioned(
                     top: Sizes.size10,
-                    left: Sizes.size20,
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.cameraswitch),
-                      onPressed: _toggleSelfieMode,
+                    right: Sizes.size20,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          color: Colors.white,
+                          icon: const Icon(Icons.cameraswitch),
+                          onPressed: _toggleSelfieMode,
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          color: _flashMode == FlashMode.off
+                              ? Colors.amber.shade200
+                              : Colors.white,
+                          icon: const Icon(
+                            Icons.flash_off_rounded,
+                          ),
+                          onPressed: () => _setFlashMode(FlashMode.off),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          color: _flashMode == FlashMode.always
+                              ? Colors.amber.shade200
+                              : Colors.white,
+                          icon: const Icon(Icons.flash_on_rounded),
+                          onPressed: () => _setFlashMode(FlashMode.always),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          color: _flashMode == FlashMode.auto
+                              ? Colors.amber.shade200
+                              : Colors.white,
+                          icon: const Icon(Icons.flash_auto_rounded),
+                          onPressed: () => _setFlashMode(FlashMode.auto),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          color: _flashMode == FlashMode.torch
+                              ? Colors.amber.shade200
+                              : Colors.white,
+                          icon: const Icon(Icons.flashlight_on_rounded),
+                          onPressed: () => _setFlashMode(FlashMode.torch),
+                        ),
+                      ],
                     ),
                   ),
                 ],
