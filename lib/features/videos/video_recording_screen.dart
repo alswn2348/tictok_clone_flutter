@@ -4,6 +4,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 
+import 'widgets/flash_mode_button.dart';
+
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
 
@@ -11,19 +13,45 @@ class VideoRecordingScreen extends StatefulWidget {
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }
 
-class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
+class _VideoRecordingScreenState extends State<VideoRecordingScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _buttonAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 100),
+  );
+
+  late final AnimationController _progressAnimationController =
+      AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 10),
+    lowerBound: 0.0,
+    upperBound: 1.0,
+  );
+
+  late final Animation<double> _buttonAnimaion =
+      Tween(begin: 1.0, end: 1.3).animate(_buttonAnimationController);
+
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
 
   late CameraController _cameraController;
 
-  late FlashMode _flashMode;
+  FlashMode flashMode = FlashMode.auto;
 
   @override
   void initState() {
     super.initState();
     initPermissions();
+    _progressAnimationController.addListener(() {
+      setState(() {});
+    });
+    _progressAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
   }
 
   @override
@@ -62,7 +90,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
     await _cameraController.initialize();
 
-    _flashMode = _cameraController.value.flashMode;
+    flashMode = _cameraController.value.flashMode;
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -73,8 +101,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
   Future<void> _setFlashMode(FlashMode newFlashMode) async {
     await _cameraController.setFlashMode(newFlashMode);
-    _flashMode = newFlashMode;
+    flashMode = newFlashMode;
     setState(() {});
+  }
+
+  void _startRecording(TapDownDetails _) {
+    _buttonAnimationController.forward();
+    _progressAnimationController.forward();
+  }
+
+  void _stopRecording() {
+    _buttonAnimationController.reverse();
+    _progressAnimationController.reset();
   }
 
   @override
@@ -112,42 +150,63 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                           onPressed: _toggleSelfieMode,
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.off
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          icon: const Icon(
-                            Icons.flash_off_rounded,
-                          ),
+                        FlashModeButton(
+                          checkFlashMode: flashMode == FlashMode.off,
                           onPressed: () => _setFlashMode(FlashMode.off),
+                          icon: Icons.flash_off_rounded,
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.always
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          icon: const Icon(Icons.flash_on_rounded),
+                        FlashModeButton(
+                          checkFlashMode: flashMode == FlashMode.always,
                           onPressed: () => _setFlashMode(FlashMode.always),
+                          icon: Icons.flash_on_rounded,
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.auto
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          icon: const Icon(Icons.flash_auto_rounded),
+                        FlashModeButton(
+                          checkFlashMode: flashMode == FlashMode.auto,
                           onPressed: () => _setFlashMode(FlashMode.auto),
+                          icon: Icons.flash_auto_rounded,
                         ),
                         Gaps.v10,
-                        IconButton(
-                          color: _flashMode == FlashMode.torch
-                              ? Colors.amber.shade200
-                              : Colors.white,
-                          icon: const Icon(Icons.flashlight_on_rounded),
+                        FlashModeButton(
+                          checkFlashMode: flashMode == FlashMode.torch,
+                          icon: Icons.flash_on_rounded,
                           onPressed: () => _setFlashMode(FlashMode.torch),
                         ),
                       ],
                     ),
                   ),
+                  Positioned(
+                      bottom: Sizes.size40,
+                      child: ScaleTransition(
+                        scale: _buttonAnimaion,
+                        child: GestureDetector(
+                          onTapDown: _startRecording,
+                          onTapUp: (details) => _stopRecording,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                width: Sizes.size60 + Sizes.size14,
+                                height: Sizes.size60 + Sizes.size14,
+                                child: CircularProgressIndicator(
+                                  color: Colors.red.shade400,
+                                  strokeWidth: Sizes.size6,
+                                  value: _progressAnimationController.value,
+                                ),
+                              ),
+                              Container(
+                                width: Sizes.size60,
+                                height: Sizes.size60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.red.shade400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))
                 ],
               ),
       ),
