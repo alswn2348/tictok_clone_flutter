@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/features/videos/video_preview_screen.dart';
 
 import 'widgets/flash_mode_button.dart';
 
@@ -56,6 +57,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   @override
   void dispose() {
+    _progressAnimationController.dispose();
+    _buttonAnimationController.dispose();
     _cameraController.dispose();
     super.dispose();
   }
@@ -86,9 +89,12 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _cameraController = CameraController(
       cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.ultraHigh,
+      enableAudio: false, //emulators bug
     );
 
     await _cameraController.initialize();
+
+    await _cameraController.prepareForVideoRecording(); // ios 싱크
 
     flashMode = _cameraController.value.flashMode;
   }
@@ -105,14 +111,30 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _startRecording(TapDownDetails _) {
+  Future<void> _startRecording(TapDownDetails _) async {
+    if (_cameraController.value.isRecordingVideo) return;
+
+    await _cameraController.startVideoRecording();
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) return;
+
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final video = await _cameraController.stopVideoRecording();
+    if (!mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(
+          video: video,
+        ),
+      ),
+    );
   }
 
   @override
@@ -182,7 +204,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                         scale: _buttonAnimaion,
                         child: GestureDetector(
                           onTapDown: _startRecording,
-                          onTapUp: (details) => _stopRecording,
+                          onTapUp: (details) => _stopRecording(),
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
