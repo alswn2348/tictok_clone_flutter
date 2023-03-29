@@ -43,6 +43,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   FlashMode flashMode = FlashMode.auto;
 
+  late double _currentZoom;
+  late double _maxZoom;
+  late double _minZoom;
+
   @override
   void initState() {
     super.initState();
@@ -113,6 +117,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.prepareForVideoRecording(); // ios 싱크
 
     flashMode = _cameraController.value.flashMode;
+
+    _maxZoom = await _cameraController.getMaxZoomLevel();
+    _minZoom = await _cameraController.getMinZoomLevel();
+    _currentZoom = 1.0;
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -240,6 +248,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       children: [
                         const Spacer(),
                         GestureDetector(
+                          onVerticalDragUpdate: _changeZoom,
                           onTapDown: _startRecording,
                           onTapUp: (details) => _stopRecording(),
                           child: ScaleTransition(
@@ -287,5 +296,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
               ),
       ),
     );
+  }
+
+  void _changeZoom(DragUpdateDetails details) async {
+    double zoomLevel = _currentZoom + (-details.localPosition.dy * 0.05);
+    if (zoomLevel > _minZoom && zoomLevel < _maxZoom) {
+      _cameraController.setZoomLevel(zoomLevel);
+    }
+    setState(() {});
   }
 }
