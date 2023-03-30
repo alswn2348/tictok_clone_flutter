@@ -5,6 +5,9 @@ import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static const String routeName = "activity";
+  static const String routeURL = "/activity";
+
   const ActivityScreen({super.key});
 
   @override

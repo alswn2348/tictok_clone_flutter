@@ -13,6 +13,9 @@ import 'package:tictok_clone_flutter/features/videos/video_preview_screen.dart';
 import 'widgets/flash_mode_button.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
+  static String routeName = "postVideo";
+  static String routeURL = "/post-video";
+
   const VideoRecordingScreen({super.key});
 
   @override
@@ -42,7 +45,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   bool _isSelfieMode = false;
 
-  late final bool _noCamera = kDebugMode && Platform.isIOS;
+  late final bool _noCamera =
+      kDebugMode && Platform.isIOS; //ios시뮬레이터 일때 카메라기능 제거하기 위한 변수
 
   late CameraController _cameraController;
 
@@ -55,8 +59,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   @override
   void initState() {
     super.initState();
-    initPermissions();
-
+    if (!_noCamera) {
+      initPermissions();
+    }
+    if (_noCamera) {
+      setState(() {
+        _hasPermission = true;
+      });
+    }
     WidgetsBinding.instance.addObserver(this); //앱상태
 
     _progressAnimationController.addListener(() {
@@ -73,13 +83,16 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void dispose() {
     _progressAnimationController.dispose();
     _buttonAnimationController.dispose();
-    _cameraController.dispose();
+    if (!_noCamera) {
+      _cameraController.dispose();
+    }
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (!_hasPermission) return;
+    if (_noCamera) return;
     if (!_cameraController.value.isInitialized) return;
     if (state == AppLifecycleState.inactive) {
       _cameraController.dispose();
@@ -191,7 +204,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: !_hasPermission || !_cameraController.value.isInitialized
+        child: !_hasPermission
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -208,44 +221,52 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  CameraPreview(_cameraController),
-                  Positioned(
-                    top: Sizes.size10,
-                    right: Sizes.size20,
-                    child: Column(
-                      children: [
-                        IconButton(
-                          color: Colors.white,
-                          icon: const Icon(Icons.cameraswitch),
-                          onPressed: _toggleSelfieMode,
-                        ),
-                        Gaps.v10,
-                        FlashModeButton(
-                          checkFlashMode: flashMode == FlashMode.off,
-                          onPressed: () => _setFlashMode(FlashMode.off),
-                          icon: Icons.flash_off_rounded,
-                        ),
-                        Gaps.v10,
-                        FlashModeButton(
-                          checkFlashMode: flashMode == FlashMode.always,
-                          onPressed: () => _setFlashMode(FlashMode.always),
-                          icon: Icons.flash_on_rounded,
-                        ),
-                        Gaps.v10,
-                        FlashModeButton(
-                          checkFlashMode: flashMode == FlashMode.auto,
-                          onPressed: () => _setFlashMode(FlashMode.auto),
-                          icon: Icons.flash_auto_rounded,
-                        ),
-                        Gaps.v10,
-                        FlashModeButton(
-                          checkFlashMode: flashMode == FlashMode.torch,
-                          icon: Icons.flash_on_rounded,
-                          onPressed: () => _setFlashMode(FlashMode.torch),
-                        ),
-                      ],
+                  if (!_noCamera && _cameraController.value.isInitialized)
+                    CameraPreview(_cameraController),
+                  const Positioned(
+                      top: Sizes.size40,
+                      left: Sizes.size20,
+                      child: CloseButton(
+                        color: Colors.white,
+                      )),
+                  if (!_noCamera)
+                    Positioned(
+                      top: Sizes.size20,
+                      right: Sizes.size20,
+                      child: Column(
+                        children: [
+                          IconButton(
+                            color: Colors.white,
+                            icon: const Icon(Icons.cameraswitch),
+                            onPressed: _toggleSelfieMode,
+                          ),
+                          Gaps.v10,
+                          FlashModeButton(
+                            checkFlashMode: flashMode == FlashMode.off,
+                            onPressed: () => _setFlashMode(FlashMode.off),
+                            icon: Icons.flash_off_rounded,
+                          ),
+                          Gaps.v10,
+                          FlashModeButton(
+                            checkFlashMode: flashMode == FlashMode.always,
+                            onPressed: () => _setFlashMode(FlashMode.always),
+                            icon: Icons.flash_on_rounded,
+                          ),
+                          Gaps.v10,
+                          FlashModeButton(
+                            checkFlashMode: flashMode == FlashMode.auto,
+                            onPressed: () => _setFlashMode(FlashMode.auto),
+                            icon: Icons.flash_auto_rounded,
+                          ),
+                          Gaps.v10,
+                          FlashModeButton(
+                            checkFlashMode: flashMode == FlashMode.torch,
+                            icon: Icons.flash_on_rounded,
+                            onPressed: () => _setFlashMode(FlashMode.torch),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Positioned(
                     bottom: Sizes.size40,
                     width: MediaQuery.of(context).size.width,

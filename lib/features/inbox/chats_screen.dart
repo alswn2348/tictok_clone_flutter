@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/inbox/chat_detail_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
+  static const String routeName = "chats";
+  static const String routeURL = "/chats";
+
   const ChatsScreen({super.key});
 
   @override
@@ -46,7 +50,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   ListTile _makeTile(int index) {
     return ListTile(
-      onTap: _onChatTap,
+      onTap: () => _onChatTap(index.toString()),
       onLongPress: () => _deleteItem(index),
       leading: const CircleAvatar(
         radius: 30,
@@ -75,12 +79,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 
-  void _onChatTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ChatDetailScreen(),
-      ),
-    );
+  void _onChatTap(String chatID) {
+    context.goNamed(ChatDetailScreen.routeName, params: {"chatId": chatID});
   }
 
   @override
