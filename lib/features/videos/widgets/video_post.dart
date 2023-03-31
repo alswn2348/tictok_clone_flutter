@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone_flutter/common/widgets/video_config.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/videos/widgets/video_button.dart';
@@ -29,6 +30,8 @@ class _VideoPostState extends State<VideoPost>
       VideoPlayerController.asset("assets/videos/video.mp4");
 
   bool _isPaused = false;
+
+  bool _autoMute = videoConfig.autoMute;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
@@ -66,6 +69,12 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -156,8 +165,22 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned.fill(
-            top: 570,
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              icon: FaIcon(
+                _autoMute
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
+              onPressed: videoConfig.toggleAutoMute,
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 10,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -183,9 +206,9 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned.fill(
-            top: 375,
-            left: 330,
+          Positioned(
+            bottom: 20,
+            right: 10,
             child: Column(
               children: [
                 const CircleAvatar(

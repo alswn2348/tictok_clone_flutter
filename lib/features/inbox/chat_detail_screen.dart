@@ -5,7 +5,7 @@ import 'package:tictok_clone_flutter/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   static const String routeName = "chatDetail";
-  static const String routeURL = ":id";
+  static const String routeURL = ":chatId";
 
   final String chatId;
 
