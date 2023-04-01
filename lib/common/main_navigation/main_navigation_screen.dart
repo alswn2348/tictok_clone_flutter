@@ -8,8 +8,9 @@ import 'package:tictok_clone_flutter/features/inbox/inbox_screen.dart';
 import 'package:tictok_clone_flutter/common/main_navigation/widgets/navigation_tab.dart';
 import 'package:tictok_clone_flutter/common/main_navigation/widgets/post_video_button.dart';
 import 'package:tictok_clone_flutter/features/user/user_profile_screen.dart';
-import 'package:tictok_clone_flutter/features/videos/video_recording_screen.dart';
-import 'package:tictok_clone_flutter/features/videos/video_timeline_screen.dart';
+import 'package:tictok_clone_flutter/features/videos/views/video_recording_screen.dart';
+import 'package:tictok_clone_flutter/features/videos/views/video_timeline_screen.dart';
+
 import 'package:tictok_clone_flutter/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {

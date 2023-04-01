@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
-import 'package:tictok_clone_flutter/features/videos/video_preview_screen.dart';
+import 'package:tictok_clone_flutter/features/videos/views/video_preview_screen.dart';
 
 import 'widgets/flash_mode_button.dart';
 
