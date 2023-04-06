@@ -35,14 +35,14 @@ void main() async {
   );
 }
 
-class TicTokApp extends StatelessWidget {
+class TicTokApp extends ConsumerWidget {
   const TicTokApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       themeMode: ThemeMode.system,
