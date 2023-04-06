@@ -1,14 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tictok_clone_flutter/features/videos/repsitories/playback_config_repo.dart';
 import 'package:tictok_clone_flutter/features/videos/view_models/palyback_config_vm.dart';
+import 'package:tictok_clone_flutter/firebase_options.dart';
 import 'package:tictok_clone_flutter/router.dart';
 import 'constants/sizes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //플러터 엔진 초기화
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp]); //세로모드 고정
