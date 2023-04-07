@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
-import 'package:tictok_clone_flutter/features/onboarding/interests_screen.dart';
+import 'package:tictok_clone_flutter/features/authentication/view_models/signup_view_model.dart';
 import 'widgets/form_button.dart';
 
-class BirthdayScreen extends StatefulWidget {
+class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
 
   @override
-  State<BirthdayScreen> createState() => _UsernameScreenState();
+  ConsumerState<BirthdayScreen> createState() => _UsernameScreenState();
 }
 
-class _UsernameScreenState extends State<BirthdayScreen> {
+class _UsernameScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
   DateTime initialDate = DateTime.now();
@@ -32,7 +32,8 @@ class _UsernameScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.goNamed(InterestsScreen.routeName);
+    ref.read(signUpProvider.notifier).signUp();
+    // context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextfieldData(DateTime date) {
@@ -52,42 +53,47 @@ class _UsernameScreenState extends State<BirthdayScreen> {
         padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size36,
         ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Gaps.v40,
-          const Text(
-            'When\'s your birthday?',
-            style: TextStyle(
-              fontSize: Sizes.size24,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Gaps.v8,
-          const Text(
-            'your birthday won\'t be shown publicy.',
-            style: TextStyle(
-              fontSize: Sizes.size16,
-              color: Colors.black54,
-            ),
-          ),
-          Gaps.v16,
-          TextField(
-            enabled: false,
-            onEditingComplete: _onNextTap,
-            controller: _birthdayController,
-            cursorColor: Theme.of(context).primaryColor,
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.shade400),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Gaps.v40,
+            const Text(
+              'When\'s your birthday?',
+              style: TextStyle(
+                fontSize: Sizes.size24,
+                fontWeight: FontWeight.w700,
               ),
             ),
-          ),
-          Gaps.v16,
-          GestureDetector(
-              onTap: _onNextTap, child: const FormButton(disabled: false))
-        ]),
+            Gaps.v8,
+            const Text(
+              'your birthday won\'t be shown publicy.',
+              style: TextStyle(
+                fontSize: Sizes.size16,
+                color: Colors.black54,
+              ),
+            ),
+            Gaps.v16,
+            TextField(
+              enabled: false,
+              onEditingComplete: _onNextTap,
+              controller: _birthdayController,
+              cursorColor: Theme.of(context).primaryColor,
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade400),
+                ),
+              ),
+            ),
+            Gaps.v16,
+            GestureDetector(
+              onTap: _onNextTap,
+              child: FormButton(disabled: ref.watch(signUpProvider).isLoading),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
           child: SizedBox(

@@ -49,5 +49,6 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Plz let me see yout photos</string>
+
 </dict>
 </plist>
