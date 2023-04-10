@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "605400700319-qjb9tknihb8b5gice1nvg673ajismb0k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tictok_clone_flutter",
+            "certificate_hash": "d2e01e964c120ea24dc2af7736a6442c8f81f893"
+          }
+        },
+        {
           "client_id": "605400700319-5260781bhj3bhju79ca43t88idb2vf1d.apps.googleusercontent.com",
           "client_type": 3
         }

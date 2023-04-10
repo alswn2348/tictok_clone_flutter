@@ -70,6 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '605400700319',
     projectId: 'tiktok-clone-mj98',
     storageBucket: 'tiktok-clone-mj98.appspot.com',
+    androidClientId: '605400700319-qjb9tknihb8b5gice1nvg673ajismb0k.apps.googleusercontent.com',
     iosClientId: '605400700319-65ecgt7tq5ekigovriogn6p4k0a19i5q.apps.googleusercontent.com',
     iosBundleId: 'com.example.tictokCloneFlutter',
   );
