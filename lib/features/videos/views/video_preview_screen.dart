@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:tictok_clone_flutter/features/videos/view_models/timeline_vm.dart';
+import 'package:tictok_clone_flutter/features/videos/view_models/upload_video_vm.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -95,6 +96,8 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   }
 
   void _onUploadPressed() {
-    ref.read(timelineProvider.notifier).uploadVideo();
+    ref.read(uploadVideopProvider.notifier).uploadVideo(
+          File(widget.video.path),
+        );
   }
 }

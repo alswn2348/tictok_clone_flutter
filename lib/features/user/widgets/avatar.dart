@@ -20,7 +20,7 @@ class Avatar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(avatarProvider).isLoading;
     return GestureDetector(
-      onTap: isLoading ? null : () => _onAvatarTap(context, ref),
+      onTap: isLoading ? null : () => _onAvatarTap(ref),
       child: isLoading
           ? Container(
               width: 50,
@@ -41,7 +41,7 @@ class Avatar extends ConsumerWidget {
     );
   }
 
-  Future<void> _onAvatarTap(BuildContext context, WidgetRef ref) async {
+  Future<void> _onAvatarTap(WidgetRef ref) async {
     final xfile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 40,
@@ -51,7 +51,7 @@ class Avatar extends ConsumerWidget {
 
     if (xfile != null) {
       final file = File(xfile.path);
-      ref.read(avatarProvider.notifier).uploadavatar(context, file);
+      ref.read(avatarProvider.notifier).uploadavatar(file);
     }
   }
 }
