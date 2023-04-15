@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/features/videos/models/video_model.dart';
 import 'package:tictok_clone_flutter/features/videos/view_models/palyback_config_vm.dart';
 import 'package:tictok_clone_flutter/features/videos/views/widgets/video_button.dart';
 import 'package:tictok_clone_flutter/features/videos/views/widgets/video_comments.dart';
@@ -13,11 +14,13 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinshed;
+  final VideoModel videoData;
 
   final int index;
 
   const VideoPost({
     super.key,
+    required this.videoData,
     required this.onVideoFinshed,
     required this.index,
   });
@@ -140,8 +143,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -193,10 +197,10 @@ class VideoPostState extends ConsumerState<VideoPost>
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    '@min._.ju',
-                    style: TextStyle(
+                    "@${widget.videoData.creator}",
+                    style: const TextStyle(
                       fontSize: Sizes.size20,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -204,8 +208,8 @@ class VideoPostState extends ConsumerState<VideoPost>
                   ),
                   Gaps.v20,
                   Text(
-                    'This is my family!!',
-                    style: TextStyle(
+                    widget.videoData.description,
+                    style: const TextStyle(
                       fontSize: Sizes.size16,
                       color: Colors.white,
                     ),
@@ -219,26 +223,34 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 10,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage("url"),
-                  child: Text('민주'),
+                  foregroundImage: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/tiktok-abc-xyz.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media"),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v12,
-                const VideoButton(
-                    text: "2.5m", icon: FontAwesomeIcons.solidHeart),
-                Gaps.v12,
+                VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: "$widget.videoData.likes"),
+                Gaps.v24,
                 GestureDetector(
-                    onTap: () => _onCommentsTap(context),
-                    child: const VideoButton(
-                        text: "30K", icon: FontAwesomeIcons.solidComment)),
-                Gaps.v12,
-                const VideoButton(text: "Share", icon: FontAwesomeIcons.share),
+                  onTap: () => _onCommentsTap(context),
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "$widget.videoData.comments",
+                  ),
+                ),
+                Gaps.v24,
+                const VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
