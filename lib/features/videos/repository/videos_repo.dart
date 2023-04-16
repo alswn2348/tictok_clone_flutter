@@ -20,14 +20,20 @@ class VideosRepository {
     await _db.collection("viedos").add(data.toJson());
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos() {
-    return _db
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos(
+      {int? lastItemCreatedAt}) {
+    final query = _db
         .collection("videos")
         .orderBy("createdAt", descending: true)
-        .get();
+        .limit(2);
+    if (lastItemCreatedAt == null) {
+      return query.get();
+    } else {
+      return query.startAfter([lastItemCreatedAt]).get();
+    }
   }
 }
 
-final videoRepo = Provider(
+final videosRepo = Provider(
   (ref) => VideosRepository(),
 );

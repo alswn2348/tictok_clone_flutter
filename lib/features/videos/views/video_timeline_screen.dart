@@ -16,15 +16,16 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   final _scrollDuration = const Duration(milliseconds: 200);
   final _scrollCurve = Curves.linear;
 
-  int _itemCount = 3;
+  int _itemCount = 0;
 
   void _onPageChanged(int page) {
+    _pageController.animateToPage(
+      page,
+      duration: _scrollDuration,
+      curve: _scrollCurve,
+    );
     if (page == _itemCount - 1) {
-      _pageController.animateToPage(page,
-          duration: _scrollDuration, curve: _scrollCurve);
-      _itemCount = _itemCount + 3;
-
-      setState(() {});
+      ref.watch(timelineProvider.notifier).fetchNextPage();
     }
   }
 
@@ -51,24 +52,27 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
           error: (error, stackTrace) => Center(
             child: Text('could not load videos : $error'),
           ),
-          data: (videos) => RefreshIndicator(
-            onRefresh: _onRefresh,
-            displacement: 50,
-            edgeOffset: 2,
-            child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                scrollDirection: Axis.vertical,
-                itemCount: videos.length,
-                itemBuilder: (context, index) {
-                  final videoData = videos[index];
-                  return VideoPost(
-                    onVideoFinshed: _onViedoFinished,
-                    index: index,
-                    videoData: videoData,
-                  );
-                }),
-          ),
+          data: (videos) {
+            _itemCount = videos.length;
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              displacement: 50,
+              edgeOffset: 2,
+              child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: _onPageChanged,
+                  scrollDirection: Axis.vertical,
+                  itemCount: videos.length,
+                  itemBuilder: (context, index) {
+                    final videoData = videos[index];
+                    return VideoPost(
+                      onVideoFinshed: _onViedoFinished,
+                      index: index,
+                      videoData: videoData,
+                    );
+                  }),
+            );
+          },
         );
   }
 }
