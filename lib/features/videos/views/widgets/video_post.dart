@@ -6,6 +6,7 @@ import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
 import 'package:tictok_clone_flutter/features/videos/models/video_model.dart';
 import 'package:tictok_clone_flutter/features/videos/view_models/palyback_config_vm.dart';
+import 'package:tictok_clone_flutter/features/videos/view_models/video_post_vm.dart';
 import 'package:tictok_clone_flutter/features/videos/views/widgets/video_button.dart';
 import 'package:tictok_clone_flutter/features/videos/views/widgets/video_comments.dart';
 
@@ -232,9 +233,12 @@ class VideoPostState extends ConsumerState<VideoPost>
                   child: Text(widget.videoData.creator),
                 ),
                 Gaps.v12,
-                VideoButton(
-                    icon: FontAwesomeIcons.solidHeart,
-                    text: "$widget.videoData.likes"),
+                GestureDetector(
+                  onTap: () => _onLikeTap(),
+                  child: VideoButton(
+                      icon: FontAwesomeIcons.solidHeart,
+                      text: "$widget.videoData.likes"),
+                ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
@@ -254,5 +258,9 @@ class VideoPostState extends ConsumerState<VideoPost>
         ],
       ),
     );
+  }
+
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 }

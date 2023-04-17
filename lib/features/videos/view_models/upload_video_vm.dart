@@ -14,7 +14,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
 
   @override
   FutureOr<void> build() {
-    _repository = ref.read(videoRepo);
+    _repository = ref.read(videosRepo);
   }
 
   Future<void> uploadVideo(File video, BuildContext context) async {
@@ -31,6 +31,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
           if (task.metadata != null) {
             await _repository.saveVideo(
               VideoModel(
+                id: "",
                 title: "great Title!",
                 description: "hello world!",
                 fileUrl: await task.ref.getDownloadURL(),
