@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone_flutter/constants/gaps.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
+import 'package:tictok_clone_flutter/features/inbox/view_model/messages_vm.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
   static const String routeURL = ":chatId";
 
@@ -12,12 +14,24 @@ class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key, required this.chatId});
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ConsumerState<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
+  final TextEditingController _editingController = TextEditingController();
+
+  void _onSendPress() {
+    final text = _editingController.text;
+    if (text == "") {
+      return;
+    }
+    ref.read(messagesProvider.notifier).sendMessage(text);
+    _editingController.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -134,20 +148,22 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(Sizes.size10),
                       child: TextField(
+                        controller: _editingController,
                         decoration: InputDecoration(
-                            hintText: 'Send a message...',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.circular(Sizes.size16),
-                                borderSide: BorderSide.none),
-                            suffixIcon: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  FaIcon(FontAwesomeIcons.faceSmile)
-                                ])),
+                          hintText: 'Send a message...',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(Sizes.size16),
+                              borderSide: BorderSide.none),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              FaIcon(FontAwesomeIcons.faceSmile)
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -159,10 +175,13 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(Sizes.size20),
                         color: Colors.grey.shade300),
-                    child: const FaIcon(
-                      FontAwesomeIcons.solidPaperPlane,
-                      color: Colors.white,
-                      size: Sizes.size18,
+                    child: IconButton(
+                      onPressed: isLoading ? null : _onSendPress,
+                      icon: FaIcon(
+                        isLoading
+                            ? FontAwesomeIcons.hourglass
+                            : FontAwesomeIcons.paperPlane,
+                      ),
                     ),
                   ),
                   Gaps.h10,
