@@ -5,9 +5,10 @@ import 'package:tictok_clone_flutter/common/main_navigation/main_navigation_scre
 import 'package:tictok_clone_flutter/features/authentication/login_screen.dart';
 import 'package:tictok_clone_flutter/features/authentication/repository/authhentication_repo.dart';
 import 'package:tictok_clone_flutter/features/authentication/sign_up_screen.dart';
-import 'package:tictok_clone_flutter/features/inbox/activity_screen.dart';
-import 'package:tictok_clone_flutter/features/inbox/chat_detail_screen.dart';
-import 'package:tictok_clone_flutter/features/inbox/chats_screen.dart';
+import 'package:tictok_clone_flutter/features/inbox/views/activity_screen.dart';
+import 'package:tictok_clone_flutter/features/inbox/views/chat_detail_screen.dart';
+import 'package:tictok_clone_flutter/features/inbox/views/chats_screen.dart';
+
 import 'package:tictok_clone_flutter/features/onboarding/interests_screen.dart';
 
 import 'features/videos/views/video_recording_screen.dart';
