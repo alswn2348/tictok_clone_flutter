@@ -28,7 +28,7 @@ class UserProfileModel {
         uid = json["uid"],
         email = json["email"],
         link = json["link"],
-        hasAvatar = json["hasAvatar"],
+        hasAvatar = json["hasAvatar"] ?? false,
         name = json["name"];
 
   Map<String, String> toJson() {
