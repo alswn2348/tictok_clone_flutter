@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone_flutter/constants/sizes.dart';
-import 'package:tictok_clone_flutter/features/inbox/chat_detail_screen.dart';
 import 'package:tictok_clone_flutter/features/inbox/views/chat_detail_screen.dart';
 
 class ChatsScreen extends StatefulWidget {

@@ -6,7 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tiktok_clone/features/videos/models/video_model.dart';
+import 'package:tictok_clone_flutter/features/videos/models/video_model.dart';
 
 void main() {
   group("VideoModel Test", () {
